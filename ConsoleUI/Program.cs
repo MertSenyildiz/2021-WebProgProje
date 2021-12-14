@@ -11,7 +11,7 @@ namespace ConsoleUI
         static void Main(string[] args)
         {
             IGameService _gameService = new GameManager(new EfGameDal());
-            foreach (var item in _gameService.GetAll())
+            foreach (var item in _gameService.GetAll().Data)
                 Console.WriteLine(item.GameName);
         }
     }
