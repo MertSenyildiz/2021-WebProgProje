@@ -20,7 +20,7 @@ namespace Business.Concrete
         }
         public IResult Add(Game game)
         {
-            var result = BusinessRules.Run(CheckIfBookNameExists(game.GameName));
+            var result = BusinessRules.Run(CheckIfGameNameExists(game.GameName));
             if (result!=null)
                 return result;
             _gameDal.Add(game);
@@ -49,7 +49,7 @@ namespace Business.Concrete
             return new Result(true);
         }
 
-        private IResult CheckIfBookNameExists(string gameName)
+        private IResult CheckIfGameNameExists(string gameName)
         {
             if (_gameDal.Get(g => g.GameName == gameName) != null)
                 return new ErrorResult();
