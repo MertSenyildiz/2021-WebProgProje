@@ -1,4 +1,6 @@
 ﻿using Business.Abstract;
+using Business.ValidationRules.FluentValidation;
+using Core.Aspects.Autofac.Validation;
 using Core.Utilities.Business;
 using Core.Utilities.Results;
 using DataAccess.Abstract;
@@ -18,6 +20,8 @@ namespace Business.Concrete
         {
             _gameDal = gameDal;
         }
+
+        [ValidationAspect(typeof(GameValidator))]
         public IResult Add(Game game)
         {
             var result = BusinessRules.Run(CheckIfGameNameExists(game.GameName));
