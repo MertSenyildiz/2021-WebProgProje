@@ -1,4 +1,5 @@
 ﻿using Business.Abstract;
+using Core.Utilities.Business;
 using Core.Utilities.Results;
 using DataAccess.Abstract;
 using Entities.Concrete;
@@ -19,6 +20,9 @@ namespace Business.Concrete
         }
         public IResult Add(Game game)
         {
+            var result = BusinessRules.Run(CheckIfBookNameExists(game.GameName));
+            if (result!=null)
+                return result;
             _gameDal.Add(game);
             return new Result(true);
         }
@@ -43,6 +47,13 @@ namespace Business.Concrete
         {
             _gameDal.Update(game);
             return new Result(true);
+        }
+
+        private IResult CheckIfBookNameExists(string gameName)
+        {
+            if (_gameDal.Get(g => g.GameName == gameName) != null)
+                return new ErrorResult();
+            return new SuccessResult();
         }
     }
 }

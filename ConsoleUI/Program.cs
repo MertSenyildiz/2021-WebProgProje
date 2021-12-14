@@ -2,6 +2,7 @@
 using Business.Concrete;
 using DataAccess.Concrete;
 using DataAccess.Concrete.EntityFramework;
+using Entities.Concrete;
 using System;
 
 namespace ConsoleUI
@@ -11,8 +12,8 @@ namespace ConsoleUI
         static void Main(string[] args)
         {
             IGameService _gameService = new GameManager(new EfGameDal());
-            foreach (var item in _gameService.GetAll().Data)
-                Console.WriteLine(item.GameName);
+            var result=_gameService.Add(new Game(){GameName="TestTestGame"});
+            Console.WriteLine(result.Success);
         }
     }
 }
