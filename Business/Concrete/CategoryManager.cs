@@ -1,4 +1,6 @@
 ﻿using Business.Abstract;
+using Business.ValidationRules.FluentValidation;
+using Core.Aspects.Autofac.Validation;
 using Core.Utilities.Business;
 using Core.Utilities.Results;
 using DataAccess.Abstract;
@@ -18,6 +20,7 @@ namespace Business.Concrete
         {
             _categoryDal = categoryDal;
         }
+        [ValidationAspect(typeof(CategoryValidator))]
         public IResult Add(Category category)
         {
             var result = BusinessRules.Run(CheckIfCategoryNameExists(category.CategoryName));
