@@ -14,5 +14,6 @@ namespace DataAccess.Concrete
             => optionsBuilder.UseNpgsql("Host=localhost;Database=GameRating;UserId=postgres;Password=Mert.123");
 
         public DbSet<Game> Games { get; set; }
+        public DbSet<Category> Categories { get; set; }
     }
 }
