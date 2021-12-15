@@ -20,7 +20,8 @@ namespace Business.Concrete
 
         public IResult Add(User user)
         {
-            throw new NotImplementedException();
+            _userDal.Add(user);
+            return new Result(true);
         }
 
         public IResult Delete(User user)
@@ -36,6 +37,26 @@ namespace Business.Concrete
         public IDataResult<User> GetById(int id)
         {
             throw new NotImplementedException();
+        }
+
+        public IDataResult<User> GetByMail(string email)
+        {
+            var result = _userDal.Get(u => u.Email == email);
+            if (result != null)
+            {
+                return new SuccessDataResult<User>(result);
+            }
+            return new ErrorDataResult<User>();
+        }
+
+        public IDataResult<List<OperationClaim>> GetClaims(User user)
+        {
+            var result = _userDal.GetClaims(user);
+            if (result != null)
+            {
+                return new SuccessDataResult<List<OperationClaim>>(result);
+            }
+            return new ErrorDataResult<List<OperationClaim>>();
         }
 
         public IResult Update(User user)
