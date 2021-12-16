@@ -4,6 +4,7 @@ using Core.Aspects.Autofac.Validation;
 using Core.Utilities.Results;
 using DataAccess.Abstract;
 using Entities.Concrete;
+using Entities.DTOs;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -35,6 +36,11 @@ namespace Business.Concrete
         public IDataResult<List<Rating>> GetAll()
         {
             return new SuccessDataResult<List<Rating>>(_ratingDal.GetAll());
+        }
+
+        public IDataResult<List<RatingDetailsDto>> GetAllRatingDetailsByGameId(int id)
+        {
+            return new SuccessDataResult<List<RatingDetailsDto>>(_ratingDal.GetAllRatingDetailsByGameId(id));
         }
 
         public IResult Update(Rating rating)
