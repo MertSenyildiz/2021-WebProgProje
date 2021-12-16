@@ -9,6 +9,7 @@ namespace Entities.Concrete
 {
     public class Rating:IEntity
     {
+        public int ID { get; set; }
         public int GameID { get; set; }
         public int UserID { get; set; }
         public int Rate { get; set; }

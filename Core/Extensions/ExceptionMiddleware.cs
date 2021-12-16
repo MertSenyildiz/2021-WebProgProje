@@ -52,7 +52,7 @@ namespace Core.Extensions
                 }.ToString());
             }
 
-            if (e.GetType() == typeof(InvalidCredentialException))
+            else if (e.GetType() == typeof(InvalidCredentialException))
             {
                 message = e.Message;
                 httpContext.Response.StatusCode = (int)HttpStatusCode.Unauthorized;
