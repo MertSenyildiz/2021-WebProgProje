@@ -1,0 +1,91 @@
+﻿@{
+    ViewData["Title"] = "Rating";
+}
+
+<head>
+    <title>Rating</title>
+
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.1.3/css/bootstrap.min.css" integrity="sha384-MCw98/SFnGE8fJT3GXwEOngsV7Zt27NXFoaoApmYm81iuXoPkFOJwJ8ERdknLPMO" crossorigin="anonymous">
+    <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.3.1/css/all.css" integrity="sha384-mzrmE5qonljUremFsqc01SB46JvROS7bZs3IO2EmfFsd15uHvIt+Y8vEf7N7fWAU" crossorigin="anonymous">
+
+    <link href="//maxcdn.bootstrapcdn.com/bootstrap/4.1.1/css/bootstrap.min.css" rel="stylesheet" id="bootstrap-css">
+    <script src="//maxcdn.bootstrapcdn.com/bootstrap/4.1.1/js/bootstrap.min.js"></script>
+    <script src="//cdnjs.cloudflare.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
+
+    <!--Custom styles-->
+    <link rel="stylesheet" type="text/css" href="~/css/rating.css">
+
+    
+</head>
+
+<body>
+
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css" integrity="sha384-wvfXpqpZZVQGK6TAh5PVlGOfQNHSoD2xbE+QkPxCAFlNEevoEH3Sl0sibVcOQVnN" crossorigin="anonymous">
+
+    <div class="container">
+        <div class="card" style="margin-top:15px;">
+            <div class="card-body">
+                <h5 class="text-dark">Değerlendirmeniz ve Yorumunuz</h5>
+                <p class="text-secondary">Oyunun oynanışı, grafikleri, optimizasyonu gibi konularda yorum yapabilirsiniz.</p>
+                <div class="star-area">
+                    <h1>
+                        <i class="fa fa-star-o" aria-hidden="true" id="star_review" data-number="1"></i>
+                        <i class="fa fa-star-o" aria-hidden="true" id="star_review" data-number="2"></i>
+                        <i class="fa fa-star-o" aria-hidden="true" id="star_review" data-number="3"></i>
+                        <i class="fa fa-star-o" aria-hidden="true" id="star_review" data-number="4"></i>
+                        <i class="fa fa-star-o" aria-hidden="true" id="star_review" data-number="5"></i>
+                    </h1>
+                </div>
+                <div class="review-area" style="display:none;">
+                    <form>
+                        <input type="hidden" name="stars" id="star_input" value="0">
+                        <textarea class="form-control" rows="3" style="resize: none"></textarea>
+                        <span class="float-right" style="margin-top:15px;line-height:35px;">
+                            <span id="stars_confirm">
+                            </span>
+                            <button class="btn btn-success float-right" type="submit" style="margin-left:20px;">Gönder</button>
+                        </span>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        $(document).ready(function () {
+            document.querySelectorAll('#star_review').forEach(function (element) {
+                element.addEventListener("mouseenter", function (event) {
+                    $('#stars_confirm').html('');
+                    var stars = event.target.dataset.number;
+                    $('#star_input').val(stars);
+                    var count = 0;
+                    document.querySelectorAll('#star_review').forEach(function (el) {
+                        if (count < stars) {
+                            $(el).removeClass('fa-star-o');
+                            $(el).addClass('fa-star');
+                            $('#stars_confirm').append('<i class="fa fa-star" aria-hidden="true" style="color:#212529 !important"></i>');
+                        } else {
+                            $(el).removeClass('fa-star');
+                            $(el).addClass('fa-star-o');
+                        }
+                        count = count + 1;
+                    });
+                });
+                element.addEventListener("click", function (event) {
+                    console.log('clicked')
+                    $('.star-area').hide();
+                    $('.review-area').fadeIn();
+                });
+                element.addEventListener("mouseleave", function (event) {
+                    document.querySelectorAll('#star_review').forEach(function (el) {
+                        $(el).removeClass('fa-star');
+                        $(el).addClass('fa-star-o');
+                    });
+                });
+            });
+        });
+    </script>
+
+</body>
+
+
