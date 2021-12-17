@@ -11,9 +11,7 @@ namespace ConsoleUI
     {
         static void Main(string[] args)
         {
-            IGameService _gameService = new GameManager(new EfGameDal());
-            var result=_gameService.Add(new Game(){GameName="TestTestGame"});
-            Console.WriteLine(result.Success);
+            
         }
     }
 }

@@ -5,6 +5,7 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Net;
+using System.Security.Authentication;
 using System.Text;
 using System.Threading.Tasks;
 
@@ -48,6 +49,17 @@ namespace Core.Extensions
                     StatusCode= (int)HttpStatusCode.BadRequest,//400 
                     Message = message,
                     Errors = errors
+                }.ToString());
+            }
+
+            else if (e.GetType() == typeof(InvalidCredentialException))
+            {
+                message = e.Message;
+                httpContext.Response.StatusCode = (int)HttpStatusCode.Unauthorized;
+                return httpContext.Response.WriteAsync(new ErrorDetails
+                {
+                    StatusCode = (int)HttpStatusCode.Unauthorized,//401
+                    Message = message,
                 }.ToString());
             }
 
