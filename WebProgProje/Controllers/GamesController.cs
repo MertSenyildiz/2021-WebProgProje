@@ -37,5 +37,6 @@ namespace WebProgProje.Controllers
             ViewBag.Ratings= ratingResult.Data;
             return View(result.Data);
         }
+
     }
 }
