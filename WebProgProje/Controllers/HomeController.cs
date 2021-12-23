@@ -39,7 +39,7 @@ namespace WebProgProje.Controllers
             var result = JsonConvert.DeserializeObject<Deneme<List<Game>>>(deneme);
             //ViewBag.Deneme = result.Data;*/
             var result = _gameService.GetAllGameDetails();
-            var result2 = result.Data.OrderByDescending(g => g.Rate).Take(1)//1 tane aldı;
+            var result2 = result.Data.OrderByDescending(g => g.Rate).Take(1);//1 tane aldı;
             return View(result2);
             
         }
