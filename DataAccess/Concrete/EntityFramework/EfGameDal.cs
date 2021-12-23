@@ -66,8 +66,8 @@ namespace DataAccess.Concrete.EntityFramework
                                  ReleaseDate = g.ReleaseDate,
                                  Rate = (from r in context.Ratings
                                          where r.GameID == g.ID
-                                         select r.Rate
-                                         ).Average()
+                                         select (double?)r.Rate
+                                         ).Average()??0.0
                              };
                 return result.FirstOrDefault();
             }

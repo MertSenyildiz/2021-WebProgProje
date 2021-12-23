@@ -1,0 +1,49 @@
+﻿@model Entities.DTOs.GameDetailsDto
+
+    <table class="border" style="color:white">
+        <tr>
+            <th>Game ID </th>
+            <th>Game Name </th>
+            <th>Developer Name </th>
+            <th>Publisher Name </th>
+            <th>Category Name </th>
+            <th>Release Date </th>
+            <th>Rate </th>
+        </tr>
+        <tr>
+            <td>@Model.ID</td>
+            <td>@Model.GameName</td>
+            <td>@Model.DeveloperName</td>
+            <td>@Model.PublisherName</td>
+            <td>@Model.CategoryName</td>
+            <td>@Model.ReleaseDate.Year</td>
+            <td>@Model.Rate</td>
+        </tr>
+    </table>
+    <div class="row">
+        @foreach (var item in ViewBag.Ratings)
+        {
+            <div class="col-md-6">
+                <div class="card">
+                    <div class="card-body">
+                        <div class="row">
+                            <div class="col-md-8 text-left">
+                                <h5 class="card-title">@item.UserName</h5>
+                            </div>
+                            <div class="col-md-4 text-right">
+                                <h5 class="card-title">@item.Date.Day.@item.Date.Month.@item.Date.Year</h5>
+                            </div>
+                        </div>
+                        <p class="card-text">@item.Comment</p>
+                    </div>
+                    <div style="background-color:red">
+                        <a href="https://github.com/MertSenyildiz"><span class="fab fa-github fa-2x"></span></a>
+                        <a href="https://www.instagram.com/senyldzmert"><span class="fab fa-instagram fa-2x"></span></a>
+                        <a href="https://steamcommunity.com/id/gamerillusive"><span class="fab fa-steam fa-2x"></span></a>
+                    </div>
+                </div>
+            </div>
+        }
+   
+        
+    </div>
