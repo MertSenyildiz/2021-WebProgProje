@@ -6,6 +6,7 @@
     <title>@ViewData["Title"] - WebProgProje</title>
     <link rel="stylesheet" href="~/lib/bootstrap/dist/css/bootstrap.min.css" />
     <link rel="stylesheet" href="~/css/site.css" />
+
 </head>
 <body>
     <header>
@@ -27,6 +28,13 @@
                         <li class="nav-item">
                             <a class="nav-link text-white" asp-area="" asp-controller="Games" asp-action="Rating">Değerlendir</a>
                         </li>
+
+                        <li class="nav-item">
+                            <a class="nav-link text-white" asp-area="" asp-controller="Home" asp-action="Index2">Ana Sayfa</a>
+                        </li>
+
+
+
                     </ul>
 
                     <ul class="navbar-nav justify-content-end">
@@ -50,7 +58,7 @@
         </main>
     </div>
 
-    <footer class="border-top footer text-muted ">
+    <footer class="border-top footer  ">
         <div class="container text-white">
             &copy; 2021 - IGDb - <a asp-area="" asp-controller="Home" asp-action="Privacy">Gizlilik</a>
         </div>
