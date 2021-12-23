@@ -5,6 +5,7 @@ using Core.Utilities.Business;
 using Core.Utilities.Results;
 using DataAccess.Abstract;
 using Entities.Concrete;
+using Entities.DTOs;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -42,9 +43,19 @@ namespace Business.Concrete
             return new SuccessDataResult<List<Game>>(_gameDal.GetAll());
         }
 
+        public IDataResult<List<GameDetailsDto>> GetAllGameDetails()
+        {
+            return new SuccessDataResult<List<GameDetailsDto>>(_gameDal.GetAllGameDetails());
+        }
+
         public IDataResult<Game> GetById(int id)
         {
             return new SuccessDataResult<Game>(_gameDal.Get(g=>g.ID==id));
+        }
+
+        public IDataResult<GameDetailsDto> GetGameDetailsById(int id)
+        {
+            return new SuccessDataResult<GameDetailsDto>(_gameDal.GetGameDetailsById(id));
         }
 
         public IResult Update(Game game)
