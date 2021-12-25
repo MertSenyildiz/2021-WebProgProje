@@ -70,11 +70,11 @@ namespace GameRating.Controllers
                 else
                 {
                     var item=HttpContext.Request.Cookies["token"];
-                    return Unauthorized();
-                    
+                    return RedirectToAction("UnAuth");
+
                 }
             }
-            return Unauthorized("Yetkisiz");
+            return RedirectToAction("UnAuth");
         }
 
         public IActionResult Login()
@@ -99,6 +99,10 @@ namespace GameRating.Controllers
             return RedirectToAction("Login");
         }
 
+        public IActionResult UnAuth()
+        {
+            return View();
+        }
         public IActionResult Register()
         {
             if (Request.Cookies["token"] != null)

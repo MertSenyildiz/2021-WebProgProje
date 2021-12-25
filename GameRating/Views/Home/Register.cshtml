@@ -23,37 +23,37 @@
 @model Entities.DTOs.UserForRegisterDto
 <div class="row">
     <div class="col-md-4">
-        <form asp-controller="Auth" asp-action="Register">
+        <form asp-controller="Auth" asp-action="Register" onsubmit="return validate()">
             <h4>@Localizer["Hesap Oluştur"] </h4>
             <hr />
             <div asp-validation-summary="All" class="text-danger"></div>
             <div class="form-group">
-                <label>@Localizer["İsim"]</label>
+                <label for="FirstName">@Localizer["İsim"]</label>
                 <input asp-for="FirstName" class="form-control" />
                 <span asp-validation-for="FirstName" class="text-danger"></span>
             </div>
             <div class="form-group">
-                <label>@Localizer["Soy İsim"]</label>
+                <label for="LastName">@Localizer["Soy İsim"]</label>
                 <input asp-for="LastName" class="form-control" />
                 <span asp-validation-for="LastName" class="text-danger"></span>
             </div>
             <div class="form-group">
-                <label>@Localizer["Kullanıcı Adı"]</label>
+                <label for="UserName">@Localizer["Kullanıcı Adı"]</label>
                 <input asp-for="UserName" class="form-control" />
                 <span asp-validation-for="UserName" class="text-danger"></span>
             </div>
             <div class="form-group">
-                <label>@Localizer["E-Mail"]</label>
+                <label for="Email">@Localizer["E-Mail"]</label>
                 <input asp-for="Email" class="form-control" />
                 <span asp-validation-for="Email" class="text-danger"></span>
             </div>
             <div class="form-group">
-                <label>@Localizer["Şifre"]</label>
+                <label  for="Password">@Localizer["Şifre"]</label>
                 <input asp-for="Password" class="form-control" />
                 <span asp-validation-for="Password" class="text-danger"></span>
             </div>
             <div class="form-group">
-                <label>@Localizer["Şifre Tekrar"]</label>
+                <label for="PasswordValidation">@Localizer["Şifre Tekrar"]</label>
                 <input asp-for="PasswordValidation" class="form-control" />
                 <span asp-validation-for="PasswordValidation" class="text-danger"></span>
             </div>
@@ -61,3 +61,4 @@
         </form>
     </div>
 </div>
+<script src="~/js/Validation.js"></script>
