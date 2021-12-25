@@ -16,7 +16,7 @@
 
 }
 
-<form asp-action="Login" method="post">
+<form asp-action="LanguageLogin" method="post">
     <label>Dil:</label>
     <select name="culture" onchange="this.form.submit()" asp-for="@requestCulture.RequestCulture.UICulture.Name" asp-items="culturelItems">
     </select>

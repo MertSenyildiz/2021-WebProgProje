@@ -87,7 +87,7 @@ namespace GameRating.Controllers
         }
 
         [HttpPost]
-        public IActionResult Login(string culture)
+        public IActionResult LanguageLogin(string culture)
         {
             Response.Cookies.Append(
                 CookieRequestCultureProvider.DefaultCookieName,
@@ -108,8 +108,9 @@ namespace GameRating.Controllers
             return View();
         }
 
+        
         [HttpPost]
-        public IActionResult Register(string culture)
+        public IActionResult LanguageRegister(string culture)
         {
             Response.Cookies.Append(
                 CookieRequestCultureProvider.DefaultCookieName,
