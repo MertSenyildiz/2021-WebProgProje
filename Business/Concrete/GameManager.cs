@@ -1,4 +1,5 @@
 ﻿using Business.Abstract;
+using Business.BusinessAspects.Autofac;
 using Business.ValidationRules.FluentValidation;
 using Core.Aspects.Autofac.Validation;
 using Core.Utilities.Business;
@@ -23,6 +24,7 @@ namespace Business.Concrete
         }
 
         [ValidationAspect(typeof(GameValidator))]
+        [SecuredOperation("Admin")]
         public IResult Add(Game game)
         {
             var result = BusinessRules.Run(CheckIfGameNameExists(game.GameName));
@@ -32,6 +34,7 @@ namespace Business.Concrete
             return new Result(true);
         }
 
+        [SecuredOperation("Admin")]
         public IResult Delete(Game game)
         {
             _gameDal.Delete(game);
@@ -58,6 +61,13 @@ namespace Business.Concrete
             return new SuccessDataResult<GameDetailsDto>(_gameDal.GetGameDetailsById(id));
         }
 
+        
+        public IDataResult<List<GameDetailsDto>> GetGameDetailsByName(string name)
+        {
+            var result = _gameDal.GetAllGameDetails().Where(g=>g.GameName.ToLower().Contains(name?.ToLower()??" ")).ToList();
+            return new SuccessDataResult<List<GameDetailsDto>>(result);
+        }
+        [SecuredOperation("Admin")]
         public IResult Update(Game game)
         {
             _gameDal.Update(game);

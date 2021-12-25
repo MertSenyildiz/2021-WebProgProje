@@ -1,0 +1,60 @@
+﻿@model IEnumerable<Entities.DTOs.GameDetailsDto>
+    <style>
+        img {
+            width: 1600px; /* You can set the dimensions to whatever you want */
+            height: 400px;
+            object-fit: fill;
+        }
+    </style>
+    <div id="carouselExampleControls" class="carousel slide" data-ride="carousel">
+        <div class="carousel-inner">
+            @{
+                int i = 0;
+                @foreach (var item in Model)
+                {
+                    if (i == 0)
+                    {
+                        <div class="carousel-item active">
+                            <a asp-controller="Games" asp-action="Rate" asp-route-id=@item.ID>
+                                <img class="d-block w-100" src="~/stockImages/game.jpg" alt=@item.GameName>
+                                <div class="carousel-caption d-none d-md-block">
+                                    <h5>@item.GameName</h5>
+                                    <p>@item.ReleaseDate.Year</p>
+                                    @for (int r = 0; r < item.Rate; r++)
+                                    {<span class="iconify" data-icon="bi:star" style="color:yellow"></span>}
+                                    <p>@item.Rate.ToString("0.0")/5</p>
+                                </div>
+                            </a>
+                        </div>
+                    }
+                    else
+                    {
+                        <div class="carousel-item">
+                            <a asp-controller="Games" asp-action="Rate" asp-route-id=@item.ID>
+                                <img class="d-block w-100 " src="~/stockImages/game.jpg" alt=@item.GameName>
+                                <div class="carousel-caption d-none d-md-block">
+                                    <h5>@item.GameName</h5>
+                                    <p>@item.ReleaseDate.Year</p>
+                                    @for (int r = 0; r < item.Rate; r++)
+                                    {<span class="iconify" data-icon="bi:star" style="color:yellow"></span>}
+                                <p>@item.Rate.ToString("0.0")/5</p>
+                                </div>
+                             </a>
+                        </div>
+                    }
+                    
+                    i++;
+                 }
+            }
+
+        </div>
+        <a class="carousel-control-prev" href="#carouselExampleControls" role="button" data-slide="prev">
+            <span class="carousel-control-prev-icon" aria-hidden="true"></span>
+            <span class="sr-only">Previous</span>
+        </a>
+        <a class="carousel-control-next" href="#carouselExampleControls" role="button" data-slide="next">
+            <span class="carousel-control-next-icon" aria-hidden="true"></span>
+            <span class="sr-only">Next</span>
+        </a>
+    </div>
+    <script src="~/js/iconify.min.js" asp-append-version="true"></script>

@@ -15,7 +15,9 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Entities", "Entities\Entiti
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "WebAPI", "WebAPI\WebAPI.csproj", "{B9AD6884-4DFC-49B8-A61A-FCEC6105A586}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "WebProgProje", "WebProgProje\WebProgProje.csproj", "{00243D82-492A-4305-B83A-E6B6AE199FAB}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "WebProgProje", "WebProgProje\WebProgProje.csproj", "{00243D82-492A-4305-B83A-E6B6AE199FAB}"
+EndProject
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "GameRating", "GameRating\GameRating.csproj", "{F4DE09CF-5842-43CA-AE03-8606E6470FC6}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -51,6 +53,10 @@ Global
 		{00243D82-492A-4305-B83A-E6B6AE199FAB}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{00243D82-492A-4305-B83A-E6B6AE199FAB}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{00243D82-492A-4305-B83A-E6B6AE199FAB}.Release|Any CPU.Build.0 = Release|Any CPU
+		{F4DE09CF-5842-43CA-AE03-8606E6470FC6}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{F4DE09CF-5842-43CA-AE03-8606E6470FC6}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{F4DE09CF-5842-43CA-AE03-8606E6470FC6}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{F4DE09CF-5842-43CA-AE03-8606E6470FC6}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

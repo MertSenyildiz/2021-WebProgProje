@@ -1,0 +1,93 @@
+﻿@inject Microsoft.AspNetCore.Http.IHttpContextAccessor HttpContextAccessor
+@using Core.Entities.Concrete;
+@using System.IdentityModel.Tokens.Jwt;
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>@ViewData["Title"] - GameRating</title>
+    <link rel="stylesheet" href="~/lib/bootstrap/dist/css/bootstrap.min.css" />
+    <link rel="stylesheet" href="~/css/site.css" />
+    <link rel="stylesheet" href="~/css/Background.css" />
+</head>
+<body>
+    <header>
+        <nav class="navbar navbar-expand-sm navbar-toggleable-sm navbar-light bg-white border-bottom box-shadow mb-3">
+            <div class="container">
+                <a class="navbar-brand" asp-area="" asp-controller="Games" asp-action="Index">GameRating</a>
+                <button class="navbar-toggler" type="button" data-toggle="collapse" data-target=".navbar-collapse" aria-controls="navbarSupportedContent"
+                        aria-expanded="false" aria-label="Toggle navigation">
+                    <span class="navbar-toggler-icon"></span>
+                </button>
+                <div class="navbar-collapse collapse d-sm-inline-flex justify-content-between">
+                    <ul class="navbar-nav flex-grow-1">
+                        <li class="nav-item">
+                            <a class="nav-link text-dark" asp-area="" asp-controller="Games" asp-action="Index">Games</a>
+                        </li>
+                        <li>
+                            <form class="form-inline my-2 my-lg-0" asp-controller="Games" asp-action="Search" method="get">
+                                <input class="form-control mr-sm-2" type="search" placeholder="Search" aria-label="Search" name="name" id="name">
+                                <button class="btn btn-outline-success my-2 my-sm-0" type="submit">Search</button>
+                            </form>
+                        </li>
+                    </ul>
+
+                    @{
+                        @if (HttpContextAccessor.HttpContext.Request.Cookies["token"] != null)
+                        {
+                            var token = HttpContextAccessor.HttpContext.Request.Cookies["token"];
+                            var handler = new JwtSecurityTokenHandler();
+                            var jwtSecurityToken = handler.ReadJwtToken(token);
+                            var jti = jwtSecurityToken.Claims;
+                            var user = new User { ID = Convert.ToInt32(jwtSecurityToken.Claims.First(c => c.Type == "http://schemas.xmlsoap.org/ws/2005/05/identity/claims/nameidentifier").Value), UserName = jwtSecurityToken.Claims.First(c => c.Type == "unique_name").Value };
+                            var Claim = jwtSecurityToken.Claims.Where(c=>c.Type== "http://schemas.microsoft.com/ws/2008/06/identity/claims/role");
+                            <div class="dropdown show">
+                                <a class="btn btn-secondary dropdown-toggle" href="#" role="button" id="dropdownMenuLink" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                                    @user.UserName
+                                </a>
+
+                                <div class="dropdown-menu" aria-labelledby="dropdownMenuLink">
+                                    <a class="dropdown-item" asp-controller="Home" asp-action="Logout">Logout</a>
+                                    @if (Claim.Where(c => c.Value == "Admin").Any())
+                                    {
+                                        <a class="dropdown-item" asp-controller="Home" asp-action="AdminPanel">AdminPanel</a>
+                                    }
+                                </div>
+                            </div>
+                        }
+                        else
+                        {
+                            <ul class="navbar-nav">
+                                <li class="nav-item">
+                                    <a class="nav-link text-dark" asp-area="" asp-controller="Home" asp-action="Login">Login</a>
+                                </li>
+                                <li class="nav-item">
+                                    <a class="nav-link text-dark" asp-area="" asp-controller="Home" asp-action="Register">Register</a>
+                                </li>
+                            </ul>
+                        }
+                    }
+
+                </div>
+            </div>
+        </nav>
+    </header>
+    <div class="container">
+        <main role="main" class="pb-3">
+            @RenderBody()
+        </main>
+    </div>
+
+    <footer class="border-top footer text-muted">
+        <div class="container">
+            &copy; 2021 - GameRating 
+        </div>
+    </footer>
+    <script src="~/lib/jquery/dist/jquery.min.js"></script>
+    <script src="~/lib/bootstrap/dist/js/bootstrap.bundle.min.js"></script>
+    <script src="~/js/site.js" asp-append-version="true"></script>
+    @await RenderSectionAsync("Scripts", required: false)
+</body>
+</html>
+

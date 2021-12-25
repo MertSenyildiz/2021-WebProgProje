@@ -18,6 +18,7 @@ namespace Business.Abstract
         IDataResult<List<Game>> GetAll();
 
         IDataResult<List<GameDetailsDto>> GetAllGameDetails();
+        IDataResult<List<GameDetailsDto>> GetGameDetailsByName(string name);
         IDataResult<GameDetailsDto> GetGameDetailsById(int id);
     }
 }
