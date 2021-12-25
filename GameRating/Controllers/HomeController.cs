@@ -44,6 +44,8 @@ namespace GameRating.Controllers
 
             return RedirectToAction("Cookie");
         }
+
+
         public IActionResult Logout()
         {
             if (Request.Cookies["token"] != null)
@@ -83,6 +85,20 @@ namespace GameRating.Controllers
             }
             return View();
         }
+
+        [HttpPost]
+        public IActionResult LanguageLogin(string culture)
+        {
+            Response.Cookies.Append(
+                CookieRequestCultureProvider.DefaultCookieName,
+                CookieRequestCultureProvider.MakeCookieValue(new RequestCulture(culture)),
+                new CookieOptions { Expires = DateTimeOffset.Now.AddDays(10) }
+                );
+
+
+            return RedirectToAction("Login");
+        }
+
         public IActionResult UnAuth()
         {
             return View();
@@ -95,6 +111,21 @@ namespace GameRating.Controllers
             }
             return View();
         }
+
+        
+        [HttpPost]
+        public IActionResult LanguageRegister(string culture)
+        {
+            Response.Cookies.Append(
+                CookieRequestCultureProvider.DefaultCookieName,
+                CookieRequestCultureProvider.MakeCookieValue(new RequestCulture(culture)),
+                new CookieOptions { Expires = DateTimeOffset.Now.AddDays(10) }
+                );
+
+
+            return RedirectToAction("Register");
+        }
+
 
         [ResponseCache(Duration = 0, Location = ResponseCacheLocation.None, NoStore = true)]
         public IActionResult Error()
