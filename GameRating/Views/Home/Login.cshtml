@@ -1,0 +1,7 @@
+﻿@model Entities.DTOs.UserForLoginDto
+    <form asp-controller="Auth" asp-action="Login" >
+        <input type="email"  asp-for="Email" />
+        <br />
+        <input type="password" asp-for="Password"/>
+        <input type="submit"/>
+    </form>

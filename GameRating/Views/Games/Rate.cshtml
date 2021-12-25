@@ -1,0 +1,62 @@
+﻿@model Entities.DTOs.GameDetailsDto
+    <style>
+        img {
+            /* You can set the dimensions to whatever you want */
+            width:130px;
+            height: 130px;
+            object-fit: fill;
+        }
+    </style>
+    <div class="row" style="border:solid 1px">
+        <div class="col-md-4">
+            <img class="d-block w-100" src="~/stockImages/game.jpg" alt=@Model.GameName>
+        </div>
+        <div class="col-md-8">
+            <div class="row">
+                <span>@Model.GameName</span>
+            </div>
+            <div class="row">
+                <span>@Model.PublisherName</span>
+            </div>
+            <div class="row">
+                <span>@Model.DeveloperName</span>
+            </div>
+            <div class="row">
+                <span>@Model.ReleaseDate.Year</span>
+            </div>
+            <div class="row">
+                @for (int r = 0; r < Model.Rate; r++)
+                {<span class="iconify" data-icon="bi:star" style="color:goldenrod"></span>}
+                
+            </div>
+            <div class="row">
+                <span>@Model.Rate.ToString("0.0")/5</span>
+            </div>
+        </div>
+    </div>
+    <div class="row justify-content-center" style="margin-top:5%">
+        @foreach(var rating in ViewBag.Ratings)
+        {
+            <div class="col-md-5" style="border:solid 1px;border-radius:5px;margin:5px;">
+                <div class="row">
+                    <div class="col-md-4">
+                        <div class="row">
+                            <span>@rating.UserName</span>
+                        </div>
+                        <div class="row">
+                            <span>@rating.Date.Day/@rating.Date.Month/@rating.Date.Year</span>
+                        </div>
+                    </div>
+                    <div class="col-md-8 text-right">
+                        @for (int r = 0; r < rating.Rate; r++)
+                        {<span class="iconify" data-icon="bi:star" style="color:goldenrod"></span>}
+                    </div>
+                </div>
+                <div class="row">
+                    <span>@rating.Comment</span>
+                </div>
+            </div>
+        }
+
+    </div>
+    <script src="~/js/iconify.min.js" asp-append-version="true"></script>

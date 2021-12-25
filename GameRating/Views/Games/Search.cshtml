@@ -1,0 +1,35 @@
+﻿@model IEnumerable<Entities.DTOs.GameDetailsDto>
+@foreach (var item in Model)
+{
+<a asp-controller="Games" asp-action="Rate" asp-route-id=@item.ID>
+    <div class="row" style="border:solid 1px;margin-bottom:3%">
+        <div class="col-md-4">
+            <img class="d-block w-100" src="~/stockImages/game.jpg" alt=@item.GameName>
+        </div>
+        <div class="col-md-8">
+            <div class="row">
+                <span>@item.GameName</span>
+            </div>
+            <div class="row">
+                <span>@item.PublisherName</span>
+            </div>
+            <div class="row">
+                <span>@item.DeveloperName</span>
+            </div>
+            <div class="row">
+                <span>@item.ReleaseDate.Year</span>
+            </div>
+            <div class="row">
+                @for (int r = 0; r < item.Rate; r++)
+                {<span class="iconify" data-icon="bi:star" style="color:goldenrod"></span>}
+
+            </div>
+            <div class="row">
+                <span>@item.Rate.ToString("0.0")/5</span>
+            </div>
+        </div>
+
+    </div>
+</a>
+}
+<script src="~/js/iconify.min.js" asp-append-version="true"></script>

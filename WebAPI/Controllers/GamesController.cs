@@ -27,7 +27,30 @@ namespace WebAPI.Controllers
                 return Ok(result);
             return BadRequest(result);
         }
-
+        [HttpGet("getgamedetailsbyid")]
+        public IActionResult GetGameDetailsById(int id)
+        {
+            var result = _gameService.GetGameDetailsById(id);
+            if (result.Success)
+                return Ok(result);
+            return BadRequest(result);
+        }
+        [HttpGet("getgamedetailsbyname")]
+        public IActionResult GetGameDetailsByName(string name)
+        {
+            var result = _gameService.GetGameDetailsByName(name);
+            if (result.Success)
+                return Ok(result);
+            return BadRequest(result);
+        }
+        [HttpGet("getallgamedetails")]
+        public IActionResult GetAllGameDetails()
+        {
+            var result = _gameService.GetAllGameDetails();
+            if (result.Success)
+                return Ok(result);
+            return BadRequest(result);
+        }
         [HttpPost("add")]
         public IActionResult Add(Game game)
         {
@@ -54,5 +77,6 @@ namespace WebAPI.Controllers
                 return Ok(result);
             return BadRequest(result);
         }
+
     }
 }
