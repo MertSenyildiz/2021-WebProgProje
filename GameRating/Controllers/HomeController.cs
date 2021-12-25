@@ -1,5 +1,7 @@
 ﻿using Core.Entities.Concrete;
 using GameRating.Models;
+using Microsoft.AspNetCore.Http;
+using Microsoft.AspNetCore.Localization;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Logging;
 using System;
@@ -23,6 +25,24 @@ namespace GameRating.Controllers
         public IActionResult Index()
         {
             return View();
+        }
+
+        public IActionResult Cookie()
+        {
+            return View();
+        }
+
+        [HttpPost]
+        public IActionResult Cookie(string culture)
+        {
+            Response.Cookies.Append(
+                CookieRequestCultureProvider.DefaultCookieName,
+                CookieRequestCultureProvider.MakeCookieValue(new RequestCulture(culture)),
+                new CookieOptions { Expires = DateTimeOffset.Now.AddDays(10) }
+                );
+
+
+            return RedirectToAction("Cookie");
         }
         public IActionResult Logout()
         {
