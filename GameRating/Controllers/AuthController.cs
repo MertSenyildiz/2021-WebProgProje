@@ -37,7 +37,12 @@ namespace GameRating.Controllers
                     Response.Cookies.Append("token", result.Token, cookie);
                     return RedirectToAction("Index", "Games");
                 }
-                return RedirectToAction("Login","Home");
+                else
+                {
+                TempData["Error"] = "Kullanıcı adı veya şifre hatalı";
+                return RedirectToAction("Login", "Home");
+                }
+                
                 
             }
             [HttpPost("register")]
@@ -46,10 +51,23 @@ namespace GameRating.Controllers
                 var json = Newtonsoft.Json.JsonConvert.SerializeObject(userForRegisterDto);
                 var data = new System.Net.Http.StringContent(json, Encoding.UTF8, "application/json");
                 var response = await _client.PostAsync("register", data);
+            if(response.IsSuccessStatusCode)
+            {
                 string unResult = response.Content.ReadAsStringAsync().Result;
                 var result = Newtonsoft.Json.JsonConvert.DeserializeObject<AccessToken>(unResult);
-                return Ok(result.Token);
-            //TODO:Düzenle
+                CookieOptions cookie = new CookieOptions();
+                cookie.HttpOnly = true;
+                cookie.Expires = result.Expiration;
+                Response.Cookies.Append("token", result.Token, cookie);
+                return RedirectToAction("Index", "Games");
             }
+            else
+            {
+                TempData["Error"]="Hatalı giriş";
+                return RedirectToAction("Register", "Home");
+            }
+            
+            //TODO:Düzenle
+        }
         }
 }

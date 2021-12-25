@@ -1,4 +1,5 @@
-﻿using GameRating.Models;
+﻿using Core.Entities.Concrete;
+using GameRating.Models;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Logging;
 using System;
@@ -23,21 +24,32 @@ namespace GameRating.Controllers
         {
             return View();
         }
-        public IActionResult Privacy()
+        public IActionResult Logout()
+        {
+            if (Request.Cookies["token"] != null)
+            {
+                Response.Cookies.Delete("token");
+            }
+            return RedirectToAction("Index","Games");
+        }
+        public IActionResult AdminPanel()
         {
             if(Request.Cookies["token"]!=null)
             {
                 var token = Request.Cookies["token"];
                 var handler = new JwtSecurityTokenHandler();
                 var jwtSecurityToken = handler.ReadJwtToken(token);
-                var jti = jwtSecurityToken.Claims.Where(c=>c.Type== "http://schemas.microsoft.com/ws/2008/06/identity/claims/role");
+                var jti = jwtSecurityToken.Claims;//.Where(c=>c.Type== "http://schemas.microsoft.com/ws/2008/06/identity/claims/role");
+                var user = new User { ID = Convert.ToInt32(jwtSecurityToken.Claims.First(c => c.Type == "http://schemas.xmlsoap.org/ws/2005/05/identity/claims/nameidentifier").Value),UserName= jwtSecurityToken.Claims.First(c => c.Type == "unique_name").Value };
                 if(jti.Where(c=>c.Value=="Admin").Any())
                 {
-                    return Ok("Merhaba");
+                    return View(user);
                 }
                 else
                 {
+                    var item=HttpContext.Request.Cookies["token"];
                     return Unauthorized();
+                    
                 }
             }
             return Unauthorized("Yetkisiz");
@@ -48,6 +60,15 @@ namespace GameRating.Controllers
             if (Request.Cookies["token"] != null)
             {
                 return RedirectToAction("Index","Games");
+            }
+            return View();
+        }
+
+        public IActionResult Register()
+        {
+            if (Request.Cookies["token"] != null)
+            {
+                return RedirectToAction("Index", "Games");
             }
             return View();
         }
