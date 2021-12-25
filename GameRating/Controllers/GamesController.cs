@@ -9,6 +9,7 @@ using System.Net.Http;
 using System.Net.Http.Headers;
 using System.Text;
 using System.Threading.Tasks;
+using Entities.Concrete;
 
 namespace GameRating.Controllers
 {
@@ -47,6 +48,38 @@ namespace GameRating.Controllers
                 return View(result.Data);
             }
             
+        }
+        [HttpPost]
+        public async Task<IActionResult> RateGame()
+        {
+            var rating = new Rating {
+                GameID= Convert.ToInt32(HttpContext.Request.Form["GameID"]),
+                UserID= Convert.ToInt32(HttpContext.Request.Form["UserID"]),
+                Rate = Convert.ToInt32(HttpContext.Request.Form["Rate"]),
+                Comment = HttpContext.Request.Form["Comment"],
+                Date=DateTime.Now
+            };
+            if (Request.Cookies["token"] != null)
+            {
+                using (var client = new HttpClient())
+                {
+                    client.DefaultRequestHeaders.Authorization= new AuthenticationHeaderValue("Bearer", Request.Cookies["token"]);
+                    var json = Newtonsoft.Json.JsonConvert.SerializeObject(rating);
+                    var data = new System.Net.Http.StringContent(json, Encoding.UTF8, "application/json");
+                    var response = await client.PostAsync("https://localhost:44397/api/ratings/addrating/", data);
+                    if (response.IsSuccessStatusCode)
+                    {
+                        return RedirectToAction("Rate", new { id = rating.GameID });
+                    }
+                    else
+                    {
+                        ViewData["Error"] = "Error";
+                        return RedirectToAction("Rate", new { id = rating.GameID });
+                    }
+                }
+            }
+            return RedirectToAction("UnAuth","Home");
+
         }
         public async Task<IActionResult> Search(string name)
         {

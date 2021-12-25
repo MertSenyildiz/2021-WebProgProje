@@ -1,62 +1,93 @@
 ﻿@model Entities.DTOs.GameDetailsDto
-    <style>
-        img {
-            /* You can set the dimensions to whatever you want */
-            width:130px;
-            height: 130px;
-            object-fit: fill;
-        }
-    </style>
-    <div class="row" style="border:solid 1px">
-        <div class="col-md-4">
-            <img class="d-block w-100" src="~/stockImages/game.jpg" alt=@Model.GameName>
-        </div>
-        <div class="col-md-8">
-            <div class="row">
-                <span>@Model.GameName</span>
-            </div>
-            <div class="row">
-                <span>@Model.PublisherName</span>
-            </div>
-            <div class="row">
-                <span>@Model.DeveloperName</span>
-            </div>
-            <div class="row">
-                <span>@Model.ReleaseDate.Year</span>
-            </div>
-            <div class="row">
-                @for (int r = 0; r < Model.Rate; r++)
-                {<span class="iconify" data-icon="bi:star" style="color:goldenrod"></span>}
-                
-            </div>
-            <div class="row">
-                <span>@Model.Rate.ToString("0.0")/5</span>
-            </div>
-        </div>
+@inject Microsoft.AspNetCore.Http.IHttpContextAccessor HttpContextAccessor
+@using Core.Entities.Concrete;
+@using System.IdentityModel.Tokens.Jwt;
+<style>
+    img {
+        /* You can set the dimensions to whatever you want */
+        width: 130px;
+        height: 130px;
+        object-fit: fill;
+    }
+</style>
+<div class="row" style="border:solid 1px">
+    <div class="col-md-4">
+        <img class="d-block w-100" src="~/stockImages/game.jpg" alt=@Model.GameName>
     </div>
-    <div class="row justify-content-center" style="margin-top:5%">
-        @foreach(var rating in ViewBag.Ratings)
-        {
-            <div class="col-md-5" style="border:solid 1px;border-radius:5px;margin:5px;">
-                <div class="row">
-                    <div class="col-md-4">
-                        <div class="row">
-                            <span>@rating.UserName</span>
-                        </div>
-                        <div class="row">
-                            <span>@rating.Date.Day/@rating.Date.Month/@rating.Date.Year</span>
-                        </div>
-                    </div>
-                    <div class="col-md-8 text-right">
-                        @for (int r = 0; r < rating.Rate; r++)
-                        {<span class="iconify" data-icon="bi:star" style="color:goldenrod"></span>}
-                    </div>
-                </div>
-                <div class="row">
-                    <span>@rating.Comment</span>
-                </div>
-            </div>
-        }
+    <div class="col-md-8">
+        <div class="row">
+            <span>@Model.GameName</span>
+        </div>
+        <div class="row">
+            <span>@Model.PublisherName</span>
+        </div>
+        <div class="row">
+            <span>@Model.DeveloperName</span>
+        </div>
+        <div class="row">
+            <span>@Model.ReleaseDate.Year</span>
+        </div>
+        <div class="row">
+            @for (int r = 0; r < Model.Rate; r++)
+            {<span class="iconify" data-icon="bi:star" style="color:goldenrod"></span>}
 
+        </div>
+        <div class="row">
+            <span>@Model.Rate.ToString("0.0")/5</span>
+        </div>
     </div>
-    <script src="~/js/iconify.min.js" asp-append-version="true"></script>
+</div>
+@{
+    @if (HttpContextAccessor.HttpContext.Request.Cookies["token"] != null)
+    {
+        var token = HttpContextAccessor.HttpContext.Request.Cookies["token"];
+        var handler = new JwtSecurityTokenHandler();
+        var jwtSecurityToken = handler.ReadJwtToken(token);
+        var jti = jwtSecurityToken.Claims;
+        var user = new User { ID = Convert.ToInt32(jwtSecurityToken.Claims.First(c => c.Type == "http://schemas.xmlsoap.org/ws/2005/05/identity/claims/nameidentifier").Value), UserName = jwtSecurityToken.Claims.First(c => c.Type == "unique_name").Value };
+        var Claim = jwtSecurityToken.Claims.Where(c => c.Type == "http://schemas.microsoft.com/ws/2008/06/identity/claims/role");
+        <div >
+            <form asp-action="RateGame">
+                <div class="form-group">
+                    <label for="Comment">Comment:</label>
+                    <textarea class="form-control" id="Comment" maxlength="256" name="Comment" required></textarea>
+                </div>
+                <div class="form-group">
+                    <label for="Rate">Puan:</label>
+                    <input type="number" id="Rate" name="Rate" min="1" max="5" required>
+                </div>
+                <input type="number" id="UserID" name="UserID" value=@user.ID hidden>
+                <input type="number" id="GameID" name="GameID" value=@Model.ID hidden>
+                <div class="form-group">
+                    <button type="submit" class="btn btn-success">Vote</button>
+                </div>
+            </form>
+        </div>
+    }
+}
+<div class="row justify-content-center" style="margin-top:5%">
+    @foreach (var rating in ViewBag.Ratings)
+    {
+        <div class="col-md-5" style="border:solid 1px;border-radius:5px;margin:5px;">
+            <div class="row">
+                <div class="col-md-4">
+                    <div class="row">
+                        <span>@rating.UserName</span>
+                    </div>
+                    <div class="row">
+                        <span>@rating.Date.Day/@rating.Date.Month/@rating.Date.Year</span>
+                    </div>
+                </div>
+                <div class="col-md-8 text-right">
+                    @for (int r = 0; r < rating.Rate; r++)
+                    {<span class="iconify" data-icon="bi:star" style="color:goldenrod"></span>}
+                </div>
+            </div>
+            <div class="row">
+                <span>@rating.Comment</span>
+            </div>
+        </div>
+    }
+
+</div>
+<script src="~/js/iconify.min.js" asp-append-version="true"></script>

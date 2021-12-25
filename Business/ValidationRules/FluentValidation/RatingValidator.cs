@@ -13,8 +13,7 @@ namespace Business.ValidationRules.FluentValidation
         public RatingValidator()
         {
             RuleFor(r => r.Comment).NotEmpty();
-            RuleFor(r => r.Comment).Length(15,256);
-            RuleFor(r => r.Date).Null();
+            RuleFor(r => r.Comment).Length(1,256);
             RuleFor(r => r.GameID).NotNull();
             RuleFor(r => r.UserID).NotNull();
             RuleFor(r => r.Rate).InclusiveBetween(1, 5);

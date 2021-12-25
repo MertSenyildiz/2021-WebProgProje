@@ -1,4 +1,5 @@
 ﻿using Business.Abstract;
+using Business.BusinessAspects.Autofac;
 using Business.ValidationRules.FluentValidation;
 using Core.Aspects.Autofac.Validation;
 using Core.Utilities.Results;
@@ -21,12 +22,13 @@ namespace Business.Concrete
             _ratingDal = ratingDal;
         }
         [ValidationAspect(typeof(RatingValidator))]
+        [SecuredOperation("User")]
         public IResult Add(Rating rating)
         {
             _ratingDal.Add(rating);
             return new SuccessResult();
         }
-
+        [SecuredOperation("Admin")]
         public IResult Delete(Rating rating)
         {
             _ratingDal.Delete(rating);
@@ -42,7 +44,7 @@ namespace Business.Concrete
         {
             return new SuccessDataResult<List<RatingDetailsDto>>(_ratingDal.GetAllRatingDetailsByGameId(id));
         }
-
+        [SecuredOperation("User")]
         public IResult Update(Rating rating)
         {
             _ratingDal.Update(rating);
