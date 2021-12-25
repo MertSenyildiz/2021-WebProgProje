@@ -22,16 +22,33 @@
 
 <table class="table culture-table">
     <tr>
-        <td>Culture</td>
+        <td>@Localizer["Dil"] </td>
         <td>
             @requestCulture.RequestCulture.Culture.Name
         </td>
     </tr>
 
     <tr>
-        <td>Tarih</td>
+        <td>@Localizer["Tarih"]</td>
         <td>
             @DateTime.Now.ToLongDateString();
         </td>
     </tr>
 </table>
+
+<div>
+    <h1>
+        @Localizer["Merhaba"]
+    </h1>
+
+    <h2>
+        @Localizer["Pazartesi"]
+    </h2>
+
+    <h2>
+        @Localizer["Mavi"]
+    </h2>
+
+
+
+</div>
