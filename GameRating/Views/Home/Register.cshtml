@@ -1,41 +1,63 @@
-﻿@model Entities.DTOs.UserForRegisterDto
+﻿@using Microsoft.AspNetCore.Builder
+@using Microsoft.AspNetCore.Localization
+@using Microsoft.Extensions.Options
+@using Microsoft.AspNetCore.Mvc.Localization
+
+@inject IViewLocalizer Localizer
+@inject IOptions<RequestLocalizationOptions> locOptions
+
+@{
+    var requestCulture = Context.Features.Get<IRequestCultureFeature>();
+    var culturelItems = locOptions.Value.SupportedUICultures
+        .Select(c => new SelectListItem { Value = c.Name, Text = c.DisplayName })
+        .ToList();
+
+}
+
+<form asp-action="Register" method="post">
+    <label>Dil:</label>
+    <select name="culture" onchange="this.form.submit()" asp-for="@requestCulture.RequestCulture.UICulture.Name" asp-items="culturelItems">
+    </select>
+</form>
+
+@model Entities.DTOs.UserForRegisterDto
 <div class="row">
     <div class="col-md-4">
         <form asp-controller="Auth" asp-action="Register">
-            <h4>Hesap Oluştur</h4>
+            <h4>@Localizer["Hesap Oluştur"] </h4>
             <hr />
             <div asp-validation-summary="All" class="text-danger"></div>
             <div class="form-group">
-                <label asp-for="FirstName"></label>
+                <label>@Localizer["İsim"]</label>
                 <input asp-for="FirstName" class="form-control" />
                 <span asp-validation-for="FirstName" class="text-danger"></span>
             </div>
             <div class="form-group">
-                <label asp-for="LastName"></label>
+                <label>@Localizer["Soy İsim"]</label>
                 <input asp-for="LastName" class="form-control" />
                 <span asp-validation-for="LastName" class="text-danger"></span>
             </div>
             <div class="form-group">
-                <label asp-for="UserName"></label>
+                <label>@Localizer["Kullanıcı Adı"]</label>
                 <input asp-for="UserName" class="form-control" />
                 <span asp-validation-for="UserName" class="text-danger"></span>
             </div>
             <div class="form-group">
-                <label asp-for="Email"></label>
+                <label>@Localizer["E-Mail"]</label>
                 <input asp-for="Email" class="form-control" />
                 <span asp-validation-for="Email" class="text-danger"></span>
             </div>
             <div class="form-group">
-                <label asp-for="Password"></label>
+                <label>@Localizer["Şifre"]</label>
                 <input asp-for="Password" class="form-control" />
                 <span asp-validation-for="Password" class="text-danger"></span>
             </div>
             <div class="form-group">
-                <label asp-for="PasswordValidation"></label>
+                <label>@Localizer["Şifre Tekrar"]</label>
                 <input asp-for="PasswordValidation" class="form-control" />
                 <span asp-validation-for="PasswordValidation" class="text-danger"></span>
             </div>
-            <button type="submit" class="btn btn-primary">Kayıt Ol</button>
+            <button type="submit" class="btn btn-primary">@Localizer["Kayıt Ol"]</button>
         </form>
     </div>
 </div>

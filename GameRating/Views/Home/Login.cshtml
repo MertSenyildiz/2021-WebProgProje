@@ -1,26 +1,48 @@
 ﻿@model Entities.DTOs.UserForLoginDto
 
+@using Microsoft.AspNetCore.Builder
+@using Microsoft.AspNetCore.Localization
+@using Microsoft.Extensions.Options
+@using Microsoft.AspNetCore.Mvc.Localization
+
+@inject IViewLocalizer Localizer
+@inject IOptions<RequestLocalizationOptions> locOptions
+
+@{
+    var requestCulture = Context.Features.Get<IRequestCultureFeature>();
+    var culturelItems = locOptions.Value.SupportedUICultures
+        .Select(c => new SelectListItem { Value = c.Name, Text = c.DisplayName })
+        .ToList();
+
+}
+
+<form asp-action="Login" method="post">
+    <label>Dil:</label>
+    <select name="culture" onchange="this.form.submit()" asp-for="@requestCulture.RequestCulture.UICulture.Name" asp-items="culturelItems">
+    </select>
+</form>
+
 <div class="row">
     <div class="col-md-4">
         <section>
             <form asp-action="Login" asp-controller="Auth" id="basic-form">
-                <h4>Use a local account to log in.</h4>
+                <h4>@Localizer["Bilgilerinizle Giriş Yapın"]</h4>
                 <hr />
                 <div asp-validation-summary="All" class="text-danger"></div>
                 <div class="form-group">
-                    <label asp-for="Email" for="Email"></label>
-                    <input asp-for="Email" class="form-control"/>
+                    <label>@Localizer["E-Mail"]</label>
+                    <input asp-for="Email" class="form-control" />
                     <span asp-validation-for="Email" class="text-danger"></span>
                 </div>
                 <div class="form-group">
-                    <label asp-for="Password" ></label>
+                    <label>@Localizer["Şifre"]</label>
                     <input asp-for="Password" class="form-control" />
                     <span asp-validation-for="Password" class="text-danger"></span>
                 </div>
                 <div class="form-group">
-                    <button type="submit" class="btn btn-primary">Log in</button>
+                    <button type="submit" class="btn btn-primary">@Localizer["Giriş Yap"]</button>
                 </div>
-                <a asp-controller="Home" asp-action="Register">Create an account</a>
+                <a asp-controller="Home" asp-action="Register">@Localizer["Hesap Oluştur"]</a>
             </form>
         </section>
     </div>
