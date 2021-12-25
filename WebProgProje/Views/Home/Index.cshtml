@@ -1,4 +1,27 @@
-﻿@{ ViewData["Title"] = "Home Page"; }
+﻿@using Microsoft.AspNetCore.Builder
+@using Microsoft.AspNetCore.Localization
+@using Microsoft.Extensions.Options
+@using Microsoft.AspNetCore.Mvc.Localization
+
+@inject IViewLocalizer Localizer
+@inject IOptions<RequestLocalizationOptions> locOptions
+
+@{
+    var requestCulture = Context.Features.Get<IRequestCultureFeature>();
+    var culturelItems = locOptions.Value.SupportedUICultures
+        .Select(c => new SelectListItem { Value = c.Name, Text = c.DisplayName })
+        .ToList();
+
+}
+
+
+<form asp-action="Index" method="post">
+    <label>Dil : </label>
+    <select name="culture" onchange="this.form.submit()" asp-for="@requestCulture.RequestCulture.UICulture.Name" asp-items="culturelItems">
+    </select>
+</form>
+
+@{ ViewData["Title"] = "Home Page"; }
 
 <link href="//maxcdn.bootstrapcdn.com/bootstrap/4.1.1/css/bootstrap.min.css" rel="stylesheet" id="bootstrap-css">
 <script src="//maxcdn.bootstrapcdn.com/bootstrap/4.1.1/js/bootstrap.min.js"></script>
@@ -15,11 +38,24 @@
     <link rel="stylesheet" type="text/css" href="~/css/home.css">
 </head>
 
+
 <body>
+
+    <table class="table culture-table text-white">
+        <tr>
+            <td>Date</td>
+            <td>
+                @DateTime.Now.ToLongDateString();
+            </td>
+        </tr>
+    </table>
+
+
+
     <div class="container">
         <div class="row pt-1 pb-1">
             <div class="col-lg-12">
-                <h4 class="text-center text-white">Oyun İnceleme ve Değerlendirme Sayfası</h4>
+                <h4 class="text-center text-white"> Oyun İnceleme ve Değerlendirme Sayfası</h4>
                 <h6 class="text-center text-white">PopülerOyunlar</h6>
             </div>
         </div>
@@ -48,4 +84,13 @@
             </a>
         </div>
     </section>
+
+    <script>
+        function SetCulture(selectedValue) {
+            var culture = "/?culture=" + selectedValue + "&ui-culture=" + selectedValue;
+            alert(culture);
+            document.getElementById("cultureForm").action = culture;
+            document.getElementById("cultureForm").submit;
+        }
+    </script>
 </body>

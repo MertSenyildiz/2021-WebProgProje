@@ -1,6 +1,8 @@
 ﻿using Business.Abstract;
 using Core.Utilities.Results;
 using Entities.Concrete;
+using Microsoft.AspNetCore.Http;
+using Microsoft.AspNetCore.Localization;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Logging;
 using Newtonsoft.Json;
@@ -12,6 +14,9 @@ using System.Net.Http;
 using System.Net.Http.Headers;
 using System.Threading.Tasks;
 using WebProgProje.Models;
+using Microsoft.AspNetCore.Builder;
+using Microsoft.Extensions.Options;
+using Microsoft.AspNetCore.Mvc.Localization;
 
 namespace WebProgProje.Controllers
 {
@@ -35,7 +40,40 @@ namespace WebProgProje.Controllers
         {
             return View();
         }
-        
+
+        public IActionResult Cookie()
+        {
+            return View();
+        }
+
+        [HttpPost]
+        public IActionResult Cookie(string culture)
+        {
+            Response.Cookies.Append(
+                CookieRequestCultureProvider.DefaultCookieName,
+                CookieRequestCultureProvider.MakeCookieValue(new RequestCulture(culture)),
+                new CookieOptions { Expires = DateTimeOffset.Now.AddDays(10) }
+                );
+            
+
+            return RedirectToAction("Cookie");
+        }
+
+        [HttpPost]
+        public IActionResult Index(string culture)
+        {
+            Response.Cookies.Append(
+                CookieRequestCultureProvider.DefaultCookieName,
+                CookieRequestCultureProvider.MakeCookieValue(new RequestCulture(culture)),
+                new CookieOptions { Expires = DateTimeOffset.Now.AddDays(10) }
+                );
+
+
+            return RedirectToAction("Index");
+        }
+
+
+
         public IActionResult Privacy()
         {
             /*HttpClient client = new HttpClient();
