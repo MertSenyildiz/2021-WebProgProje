@@ -1,41 +1,41 @@
 ﻿@model Entities.DTOs.UserForRegisterDto
 <div class="row">
     <div class="col-md-4">
-        <form asp-controller="Auth" asp-action="Register">
+        <form asp-controller="Auth" asp-action="Register" onsubmit="return validate()">
             <h4>Create a new account.</h4>
             <hr />
             <div asp-validation-summary="All" class="text-danger"></div>
             <div class="form-group">
                 <label asp-for="FirstName"></label>
-                <input asp-for="FirstName" class="form-control" />
-                <span asp-validation-for="FirstName" class="text-danger"></span>
+                <input type="text" asp-for="FirstName" class="form-control" id="FirstName" />
+                <span asp-validation-for="FirstName" class="text-danger" id="FirstNameSpan"></span>
             </div>
             <div class="form-group">
                 <label asp-for="LastName"></label>
-                <input asp-for="LastName" class="form-control" />
-                <span asp-validation-for="LastName" class="text-danger"></span>
+                <input asp-for="LastName" class="form-control" id="LastName" />
+                <span asp-validation-for="LastName" class="text-danger" id="LastNameSpan"></span>
             </div>
             <div class="form-group">
                 <label asp-for="UserName"></label>
-                <input asp-for="UserName" class="form-control" />
-                <span asp-validation-for="UserName" class="text-danger"></span>
+                <input type="text" asp-for="UserName" class="form-control" id="UserName" />
+                <span asp-validation-for="UserName" class="text-danger" id="UserNameSpan"></span>
             </div>
             <div class="form-group">
                 <label asp-for="Email"></label>
-                <input asp-for="Email" class="form-control" />
-                <span asp-validation-for="Email" class="text-danger"></span>
+                <input type="email" asp-for="Email" class="form-control" id="Email" />
+                <span asp-validation-for="Email" class="text-danger" id="EmailSpanSpan"></span>
             </div>
             <div class="form-group">
                 <label asp-for="Password"></label>
-                <input asp-for="Password" class="form-control" />
-                <span asp-validation-for="Password" class="text-danger"></span>
+                <input type="password" asp-for="Password" class="form-control" id="Password"/>
+                <span asp-validation-for="Password" class="text-danger" id="PasswordSpan"></span>
             </div>
             <div class="form-group">
                 <label asp-for="PasswordValidation"></label>
-                <input asp-for="PasswordValidation" class="form-control" />
-                <span asp-validation-for="PasswordValidation" class="text-danger"></span>
+                <input type="password" asp-for="PasswordValidation" class="form-control" id="PasswordValidation"/>
             </div>
             <button type="submit" class="btn btn-primary">Register</button>
         </form>
     </div>
 </div>
+<script src="~/js/Validation.js"></script>
