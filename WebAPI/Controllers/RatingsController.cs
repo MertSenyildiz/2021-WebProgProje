@@ -36,5 +36,13 @@ namespace WebAPI.Controllers
                 return Ok(result);
             return BadRequest(result);
         }
+        [HttpPost("checkrateexist")]
+        public IActionResult CheckRateExist(Rating rating)
+        {
+            var result = _ratingService.CheckRateExist(rating);
+            if (result.Success)
+                return Ok(result);
+            return BadRequest(result);
+        }
     }
 }

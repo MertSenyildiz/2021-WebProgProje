@@ -28,6 +28,14 @@ namespace Business.Concrete
             _ratingDal.Add(rating);
             return new SuccessResult();
         }
+        [SecuredOperation("User")]
+        public IDataResult<bool> CheckRateExist(Rating rate)
+        {
+            var rating = _ratingDal.Get(r => r.GameID == rate.GameID && r.UserID == rate.UserID);
+            var result = rating == null ? false : true;
+            return new SuccessDataResult<bool>(result);
+        }
+
         [SecuredOperation("Admin")]
         public IResult Delete(Rating rating)
         {

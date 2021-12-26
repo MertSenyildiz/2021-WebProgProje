@@ -16,5 +16,6 @@ namespace Business.Abstract
         IResult Update(Rating rating);
         IDataResult<List<Rating>> GetAll();
         IDataResult<List<RatingDetailsDto>> GetAllRatingDetailsByGameId(int id);
+        IDataResult<bool> CheckRateExist(Rating rate);
     }
 }

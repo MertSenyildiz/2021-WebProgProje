@@ -6,7 +6,7 @@
     var password = validatePassword();
     if (mail && firstName && lastName && userName && password)*/
     if (validateFirstName() && validateLastName() && validateUserName() && validateMail() && validatePassword()) {
-        return false;
+        return true;
     }  
     return false;
 }

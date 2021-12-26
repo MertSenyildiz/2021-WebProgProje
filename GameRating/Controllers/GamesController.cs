@@ -66,10 +66,14 @@ namespace GameRating.Controllers
                     client.DefaultRequestHeaders.Authorization= new AuthenticationHeaderValue("Bearer", Request.Cookies["token"]);
                     var json = Newtonsoft.Json.JsonConvert.SerializeObject(rating);
                     var data = new System.Net.Http.StringContent(json, Encoding.UTF8, "application/json");
-                    var response = await client.PostAsync("https://localhost:44397/api/ratings/addrating/", data);
+                    var response = await client.PostAsync("https://localhost:44397/api/ratings/checkrateexist/",data);
+                    string unResult = response.Content.ReadAsStringAsync().Result;
+                    var result = Newtonsoft.Json.JsonConvert.DeserializeObject<DataResult<bool>>(unResult);
+                    if (!result.Data)
+                        response = await client.PostAsync("https://localhost:44397/api/ratings/addrating/", data);
                     if (response.IsSuccessStatusCode)
                     {
-                        return RedirectToAction("Rate", new { id = rating.GameID });
+                            return RedirectToAction("Rate", new { id = rating.GameID });
                     }
                     else
                     {
