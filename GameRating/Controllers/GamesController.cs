@@ -167,5 +167,12 @@ namespace GameRating.Controllers
             //} Yetkilendirme yapıldı
             //return RedirectToAction("Index");
         }
+        public async Task<IActionResult> ListGames()
+        {
+            var response = await _client.GetAsync("getallgamedetails/");
+            string unResult = response.Content.ReadAsStringAsync().Result;
+            var result = Newtonsoft.Json.JsonConvert.DeserializeObject<DataResult<List<GameDetailsDto>>>(unResult);
+            return View(result.Data);
+        }
     }
 }
