@@ -4,7 +4,7 @@ Günümüzde video oyunlar çok fazla çeşitlere ulaştı ve oyuncular hangi oy
 ## Grup Üyeleri
 |Şube|Öğrenci No|Ad Soyad                |
 |----|----------|------------------------|
-|1C  |B181210036 |Mert Şenyıldız         |
-|1B  |B181210089 |Fatih Abidin Silan     |
+|1C  |B181210036 |[__Mert Şenyıldız__](https://github.com/MertSenyildiz)|
+|1B  |B181210089 |[__Fatih Abidin Silan__](https://github.com/fatihsilan)|
 ## API Hizmeti
 ![API](https://user-images.githubusercontent.com/63149243/147409137-72849b51-ada6-49bd-a259-0493b2492ebe.png)
