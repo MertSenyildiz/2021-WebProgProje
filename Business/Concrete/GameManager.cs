@@ -22,9 +22,8 @@ namespace Business.Concrete
         {
             _gameDal = gameDal;
         }
-
-        [ValidationAspect(typeof(GameValidator))]
         [SecuredOperation("Admin")]
+        [ValidationAspect(typeof(GameValidator))]
         public IResult Add(Game game)
         {
             var result = BusinessRules.Run(CheckIfGameNameExists(game.GameName));

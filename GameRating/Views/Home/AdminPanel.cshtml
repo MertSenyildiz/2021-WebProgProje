@@ -1,10 +1,36 @@
 ﻿@model Core.Entities.Concrete.User
 @{
-    ViewData["Title"] = "Privacy Policy";
+    ViewData["Title"] = "Admin Panel";
 }
 <h1>@ViewData["Title"]</h1>
 
-<p>Use this page to detail your site's privacy policy.</p>
-@Model.UserName
-<br />
-@Model.ID
+<h1>Welcome @Model.UserName</h1>
+<div class="row">
+    <div class="col-md-4">
+        <form asp-action="Create" asp-controller="Games">
+            <div class="form-group">
+                <label for="GameName" class="control-label">Game Name</label>
+                <input name="GameName" class="form-control" required />
+            </div>
+            <div class="form-group">
+                <label for="DeveloperID" class="control-label">Developer</label>
+                <select name="DeveloperID" class="form-control" asp-items="ViewBag.DeveloperID" required></select>
+            </div>
+            <div class="form-group">
+                <label for="PublisherID" class="control-label">Publisher</label>
+                <select name="PublisherID" class="form-control" asp-items="ViewBag.PublisherID" required></select>
+            </div>
+            <div class="form-group">
+                <label for="CategoryID" class="control-label">Publisher</label>
+                <select name="CategoryID" class="form-control" asp-items="ViewBag.CategoryID" required></select>
+            </div>
+            <div class="form-group">
+                <label for="ReleaseDate" class="control-label">Release Date</label>
+                <input type="date" name="ReleaseDate" required />
+            </div>
+            <div class="form-group">
+                <input type="submit" value="Create" class="btn btn-primary" />
+            </div>
+        </form>
+    </div>
+</div>
