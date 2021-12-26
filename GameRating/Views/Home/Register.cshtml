@@ -1,4 +1,11 @@
-﻿@using Microsoft.AspNetCore.Builder
+﻿<style>
+    htlm, body {
+        background-image: url("https://wallpapercave.com/wp/wp7618993.jpg");
+        background-size: cover;
+    }
+</style>
+
+@using Microsoft.AspNetCore.Builder
 @using Microsoft.AspNetCore.Localization
 @using Microsoft.Extensions.Options
 @using Microsoft.AspNetCore.Mvc.Localization
@@ -21,7 +28,7 @@
 </form>
 
 @model Entities.DTOs.UserForRegisterDto
-<div class="row">
+<div class="row font-weight-bold">
     <div class="col-md-4">
         <form asp-controller="Auth" asp-action="Register" onsubmit="return validate()">
             <h4>@Localizer["Hesap Oluştur"] </h4>

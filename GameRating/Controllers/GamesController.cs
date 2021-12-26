@@ -10,6 +10,8 @@ using System.Net.Http.Headers;
 using System.Text;
 using System.Threading.Tasks;
 using Entities.Concrete;
+using Microsoft.AspNetCore.Localization;
+using Microsoft.AspNetCore.Http;
 
 namespace GameRating.Controllers
 {
@@ -33,6 +35,21 @@ namespace GameRating.Controllers
             }
             return BadRequest();
         }
+
+        [HttpPost]
+        public IActionResult LanguageGames(string culture)
+        {
+            Response.Cookies.Append(
+                CookieRequestCultureProvider.DefaultCookieName,
+                CookieRequestCultureProvider.MakeCookieValue(new RequestCulture(culture)),
+                new CookieOptions { Expires = DateTimeOffset.Now.AddDays(10) }
+                );
+
+
+            return RedirectToAction("Index", "Games");
+        }
+
+
         [Route("/Rate/{id}")]
         public async Task<IActionResult> Rate(int id)
         {
@@ -85,6 +102,21 @@ namespace GameRating.Controllers
             return RedirectToAction("UnAuth","Home");
 
         }
+
+        [HttpPost]
+        public IActionResult LanguageRate(string culture, int gameId)
+        {
+            Response.Cookies.Append(
+                CookieRequestCultureProvider.DefaultCookieName,
+                CookieRequestCultureProvider.MakeCookieValue(new RequestCulture(culture)),
+                new CookieOptions { Expires = DateTimeOffset.Now.AddDays(10) }
+                );
+
+
+            return RedirectToAction("Rate", new { id = gameId });
+        }
+
+
         public async Task<IActionResult> Search(string name)
         {
             /*if(Request.Cookies["token"]!=null)

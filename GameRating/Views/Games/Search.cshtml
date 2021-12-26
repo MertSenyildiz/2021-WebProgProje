@@ -1,4 +1,11 @@
-﻿@model IEnumerable<Entities.DTOs.GameDetailsDto>
+﻿<style>
+    htlm, body {
+        background-image: url("https://wallpapercave.com/wp/wp7618993.jpg");
+        background-size: cover;
+    }
+</style>
+
+@model IEnumerable<Entities.DTOs.GameDetailsDto>
 @foreach (var item in Model)
 {
 <a asp-controller="Games" asp-action="Rate" asp-route-id=@item.ID>
