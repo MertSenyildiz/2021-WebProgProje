@@ -41,7 +41,7 @@
                             var jwtSecurityToken = handler.ReadJwtToken(token);
                             var jti = jwtSecurityToken.Claims;
                             var user = new User { ID = Convert.ToInt32(jwtSecurityToken.Claims.First(c => c.Type == "http://schemas.xmlsoap.org/ws/2005/05/identity/claims/nameidentifier").Value), UserName = jwtSecurityToken.Claims.First(c => c.Type == "unique_name").Value };
-                            var Claim = jwtSecurityToken.Claims.Where(c=>c.Type== "http://schemas.microsoft.com/ws/2008/06/identity/claims/role");
+                            var Claim = jwtSecurityToken.Claims.Where(c => c.Type == "http://schemas.microsoft.com/ws/2008/06/identity/claims/role");
                             <div class="dropdown show">
                                 <a class="btn btn-secondary dropdown-toggle" href="#" role="button" id="dropdownMenuLink" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
                                     @user.UserName
@@ -81,11 +81,24 @@
 
     <footer class="border-top footer text-muted bg-primary">
         <div class="container text-white font-weight-bold">
-            &copy; 2021 - GameRating 
+            <div class="row">
+                <div class="col-md-8">
+                    &copy; 2021 - GameRating
+                </div>
+                <div class="col-md-2 justify-content-center">
+                    Fatih Abidin Silan
+                    <a href="https://github.com/fatihsilan"><span class="fab fa-github fa-2x"></span></a>
+                </div>
+                <div class="col-md-2 justify-content-center">
+                    Mert Şenyıldız
+                    <a href="https://github.com/MertSenyildiz"><span class="fab fa-github fa-2x"></span></a>
+                </div>
+            </div>
         </div>
     </footer>
     <script src="~/lib/jquery/dist/jquery.min.js"></script>
     <script src="~/lib/bootstrap/dist/js/bootstrap.bundle.min.js"></script>
+    <script src="https://use.fontawesome.com/releases/v5.15.4/js/all.js"></script>
     <script src="~/js/site.js" asp-append-version="true"></script>
     @await RenderSectionAsync("Scripts", required: false)
 </body>
