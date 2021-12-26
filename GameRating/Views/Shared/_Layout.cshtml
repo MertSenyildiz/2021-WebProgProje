@@ -1,4 +1,18 @@
-﻿@inject Microsoft.AspNetCore.Http.IHttpContextAccessor HttpContextAccessor
+﻿@using Microsoft.AspNetCore.Builder
+@using Microsoft.AspNetCore.Localization
+@using Microsoft.Extensions.Options
+@using Microsoft.AspNetCore.Mvc.Localization
+
+@inject IViewLocalizer Localizer
+@inject IOptions<RequestLocalizationOptions> locOptions
+
+@{ var requestCulture = Context.Features.Get<IRequestCultureFeature>();
+                var culturelItems = locOptions.Value.SupportedUICultures
+                    .Select(c => new SelectListItem { Value = c.Name, Text = c.DisplayName })
+                    .ToList(); }
+
+
+@inject Microsoft.AspNetCore.Http.IHttpContextAccessor HttpContextAccessor
 @using Core.Entities.Concrete;
 @using System.IdentityModel.Tokens.Jwt;
 <!DOCTYPE html>
@@ -23,12 +37,12 @@
                 <div class="navbar-collapse collapse d-sm-inline-flex justify-content-between">
                     <ul class="navbar-nav flex-grow-1">
                         <li class="nav-item">
-                            <a class="nav-link text-white font-weight-bold" asp-area="" asp-controller="Games" asp-action="ListGames">Games</a>
+                            <a class="nav-link text-white font-weight-bold" asp-area="" asp-controller="Games" asp-action="ListGames">@Localizer["Oyunlar"]</a>
                         </li>
                         <li>
                             <form class="form-inline my-2 my-lg-0" asp-controller="Games" asp-action="Search" method="get">
-                                <input class="form-control mr-sm-2" type="search" placeholder="Search" aria-label="Search" name="name" id="name">
-                                <button class="btn btn-outline-success my-2 my-sm-0 text-white" type="submit">Search</button>
+                                <input class="form-control mr-sm-2" type="search" placeholder=@Localizer["Ara"] aria-label="Search" name="name" id="name">
+                                <button class="btn btn-outline-success my-2 my-sm-0 text-white" type="submit">@Localizer["Ara"]</button>
                             </form>
                         </li>
                     </ul>
@@ -48,10 +62,10 @@
                                 </a>
 
                                 <div class="dropdown-menu" aria-labelledby="dropdownMenuLink">
-                                    <a class="dropdown-item font-weight-bold" asp-controller="Home" asp-action="Logout">Logout</a>
+                                    <a class="dropdown-item font-weight-bold" asp-controller="Home" asp-action="Logout">@Localizer["Çıkış"]</a>
                                     @if (Claim.Where(c => c.Value == "Admin").Any())
                                     {
-                                        <a class="dropdown-item font-weight-bold" asp-controller="Home" asp-action="AdminPanel">AdminPanel</a>
+                                <a class="dropdown-item font-weight-bold" asp-controller="Home" asp-action="AdminPanel">@Localizer["Yönetici Panel"]</a>
                                     }
                                 </div>
                             </div>
@@ -60,10 +74,10 @@
                         {
                             <ul class="navbar-nav">
                                 <li class="nav-item">
-                                    <a class="nav-link text-white font-weight-bold" asp-area="" asp-controller="Home" asp-action="Login">Login</a>
+                                    <a class="nav-link text-white font-weight-bold" asp-area="" asp-controller="Home" asp-action="Login">@Localizer["Giriş Yap"]</a>
                                 </li>
                                 <li class="nav-item">
-                                    <a class="nav-link text-white font-weight-bold" asp-area="" asp-controller="Home" asp-action="Register">Register</a>
+                                    <a class="nav-link text-white font-weight-bold" asp-area="" asp-controller="Home" asp-action="Register">@Localizer["Üye Ol"]</a>
                                 </li>
                             </ul>
                         }
