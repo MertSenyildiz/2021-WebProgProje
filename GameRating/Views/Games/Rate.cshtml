@@ -20,11 +20,13 @@
 }
 
 
-<form asp-action="LanguageRate" asp-route-gameId=@Model.ID method="post">
-    <label>@Localizer["Dil :"]</label>
-    <select name="culture" onchange="this.form.submit()" asp-for="@requestCulture.RequestCulture.UICulture.Name" asp-items="culturelItems">
-    </select>
-</form>
+<div class="row justify-content-end">
+    <form asp-action="LanguageRate" method="post">
+        <label class="font-weight-bold">@Localizer["Dil :"]</label>
+        <select name="culture" onchange="this.form.submit()" asp-for="@requestCulture.RequestCulture.UICulture.Name" asp-items="culturelItems">
+        </select>
+    </form>
+</div>
 
 
 <style>

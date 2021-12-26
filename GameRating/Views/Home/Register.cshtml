@@ -21,11 +21,13 @@
 
 }
 
-<form asp-action="LanguageRegister" method="post">
-    <label class="font-weight-bold">@Localizer["Dil :"]</label>
-    <select name="culture" onchange="this.form.submit()" asp-for="@requestCulture.RequestCulture.UICulture.Name" asp-items="culturelItems">
-    </select>
-</form>
+<div class="row justify-content-end">
+    <form asp-action="LanguageRegister" method="post">
+        <label class="font-weight-bold">@Localizer["Dil :"]</label>
+        <select name="culture" onchange="this.form.submit()" asp-for="@requestCulture.RequestCulture.UICulture.Name" asp-items="culturelItems">
+        </select>
+    </form>
+</div>
 
 @model Entities.DTOs.UserForRegisterDto
 <div class="row font-weight-bold">
