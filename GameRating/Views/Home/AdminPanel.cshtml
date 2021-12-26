@@ -4,28 +4,51 @@
 }
 <h1>@ViewData["Title"]</h1>
 
-<h1>Welcome @Model.UserName</h1>
+@using Microsoft.AspNetCore.Builder
+@using Microsoft.AspNetCore.Localization
+@using Microsoft.Extensions.Options
+@using Microsoft.AspNetCore.Mvc.Localization
+
+@inject IViewLocalizer Localizer
+@inject IOptions<RequestLocalizationOptions> locOptions
+
+@{
+    var requestCulture = Context.Features.Get<IRequestCultureFeature>();
+    var culturelItems = locOptions.Value.SupportedUICultures
+        .Select(c => new SelectListItem { Value = c.Name, Text = c.DisplayName })
+        .ToList();
+
+}
+
+<form asp-action="LanguageAdminPanel" method="post">
+    <label class="font-weight-bold">@Localizer["Dil :"]</label>
+    <select name="culture" onchange="this.form.submit()" asp-for="@requestCulture.RequestCulture.UICulture.Name" asp-items="culturelItems">
+    </select>
+</form>
+
+<h1>@Localizer["Hoşgeldiniz"]  @Model.UserName</h1>
+<h3>@Localizer["Bir Oyun Ekleyin"]</h3>
 <div class="row">
-    <div class="col-md-4">
+    <div class="col-md-4 font-weight-bold">
         <form asp-action="Create" asp-controller="Games">
             <div class="form-group">
-                <label for="GameName" class="control-label">Game Name</label>
+                <label for="GameName" class="control-label">@Localizer["Oyun Adı"]</label>
                 <input name="GameName" class="form-control" required />
             </div>
             <div class="form-group">
-                <label for="DeveloperID" class="control-label">Developer</label>
+                <label for="DeveloperID" class="control-label">@Localizer["Geliştirici"]</label>
                 <select name="DeveloperID" class="form-control" asp-items="ViewBag.DeveloperID" required></select>
             </div>
             <div class="form-group">
-                <label for="PublisherID" class="control-label">Publisher</label>
+                <label for="PublisherID" class="control-label">@Localizer["Yayıncı"]</label>
                 <select name="PublisherID" class="form-control" asp-items="ViewBag.PublisherID" required></select>
             </div>
             <div class="form-group">
-                <label for="CategoryID" class="control-label">Publisher</label>
+                <label for="CategoryID" class="control-label">@Localizer["Kategori"]</label>
                 <select name="CategoryID" class="form-control" asp-items="ViewBag.CategoryID" required></select>
             </div>
             <div class="form-group">
-                <label for="ReleaseDate" class="control-label">Release Date</label>
+                <label for="ReleaseDate" class="control-label">@Localizer["Çıkış Tarihi"]</label>
                 <input type="date" name="ReleaseDate" required />
             </div>
             <div class="form-group">

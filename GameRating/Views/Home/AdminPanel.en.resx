@@ -117,16 +117,28 @@
   <resheader name="writer">
     <value>System.Resources.ResXResourceWriter, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
   </resheader>
+  <data name="Bir Oyun Ekleyin" xml:space="preserve">
+    <value>Add a Game</value>
+  </data>
   <data name="Dil :" xml:space="preserve">
     <value>Language :</value>
   </data>
-  <data name="Oy Ver" xml:space="preserve">
-    <value>Vote</value>
+  <data name="Geliştirici" xml:space="preserve">
+    <value>Developer</value>
   </data>
-  <data name="Puan :" xml:space="preserve">
-    <value>Points :</value>
+  <data name="Hoşgeldiniz" xml:space="preserve">
+    <value>Welcome</value>
   </data>
-  <data name="Yorumunuz :" xml:space="preserve">
-    <value>Comment :</value>
+  <data name="Kategori" xml:space="preserve">
+    <value>Category</value>
+  </data>
+  <data name="Oyun Adı" xml:space="preserve">
+    <value>Game Name</value>
+  </data>
+  <data name="Yayıncı" xml:space="preserve">
+    <value>Publisher</value>
+  </data>
+  <data name="Çıkış Tarihi" xml:space="preserve">
+    <value>Release Date</value>
   </data>
 </root>
