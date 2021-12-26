@@ -20,11 +20,13 @@
 
 }
 
-<form asp-action="LanguageAdminPanel" method="post">
-    <label class="font-weight-bold">@Localizer["Dil :"]</label>
-    <select name="culture" onchange="this.form.submit()" asp-for="@requestCulture.RequestCulture.UICulture.Name" asp-items="culturelItems">
-    </select>
-</form>
+<div class="row justify-content-end">
+    <form asp-action="LanguageAdminPanel" method="post">
+        <label class="font-weight-bold">@Localizer["Dil :"]</label>
+        <select name="culture" onchange="this.form.submit()" asp-for="@requestCulture.RequestCulture.UICulture.Name" asp-items="culturelItems">
+        </select>
+    </form>
+</div>
 
 <h1>@Localizer["Hoşgeldiniz"]  @Model.UserName</h1>
 <h3>@Localizer["Bir Oyun Ekleyin"]</h3>
