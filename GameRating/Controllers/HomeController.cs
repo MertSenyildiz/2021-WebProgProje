@@ -90,6 +90,19 @@ namespace GameRating.Controllers
             return RedirectToAction("UnAuth");
         }
 
+        [HttpPost]
+        public IActionResult LanguageAdminPanel(string culture)
+        {
+            Response.Cookies.Append(
+                CookieRequestCultureProvider.DefaultCookieName,
+                CookieRequestCultureProvider.MakeCookieValue(new RequestCulture(culture)),
+                new CookieOptions { Expires = DateTimeOffset.Now.AddDays(10) }
+                );
+
+
+            return RedirectToAction("AdminPanel");
+        }
+
         public IActionResult Login()
         {
             if (Request.Cookies["token"] != null)
