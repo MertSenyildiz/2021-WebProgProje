@@ -1,14 +1,18 @@
 ﻿using Core.Entities.Concrete;
+using Entities.Concrete;
 using GameRating.Models;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Localization;
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.AspNetCore.Mvc.Rendering;
 using Microsoft.Extensions.Logging;
 using System;
 using System.Collections.Generic;
 using System.Diagnostics;
 using System.IdentityModel.Tokens.Jwt;
 using System.Linq;
+using System.Net.Http;
+using System.Net.Http.Headers;
 using System.Threading.Tasks;
 
 namespace GameRating.Controllers
@@ -54,7 +58,7 @@ namespace GameRating.Controllers
             }
             return RedirectToAction("Index","Games");
         }
-        public IActionResult AdminPanel()
+        public async Task<IActionResult> AdminPanelAsync()
         {
             if(Request.Cookies["token"]!=null)
             {
@@ -65,13 +69,22 @@ namespace GameRating.Controllers
                 var user = new User { ID = Convert.ToInt32(jwtSecurityToken.Claims.First(c => c.Type == "http://schemas.xmlsoap.org/ws/2005/05/identity/claims/nameidentifier").Value),UserName= jwtSecurityToken.Claims.First(c => c.Type == "unique_name").Value };
                 if(jti.Where(c=>c.Value=="Admin").Any())
                 {
-                    return View(user);
-                }
-                else
-                {
-                    var item=HttpContext.Request.Cookies["token"];
-                    return RedirectToAction("UnAuth");
-
+                    using(HttpClient client=new HttpClient()) {
+                        client.DefaultRequestHeaders.Authorization = new AuthenticationHeaderValue("Bearer", Request.Cookies["token"]);
+                        var response = await client.GetAsync("https://localhost:44397/api/publishers/getall");
+                        string unResult = response.Content.ReadAsStringAsync().Result;
+                        var resultPublisher = Newtonsoft.Json.JsonConvert.DeserializeObject<DataResult<List<Publisher>>>(unResult);
+                        ViewData["PublisherID"] = new SelectList(resultPublisher.Data, "ID", "PublisherName");
+                        response = await client.GetAsync("https://localhost:44397/api/developers/getall");
+                        unResult = response.Content.ReadAsStringAsync().Result;
+                        var resultDeveloper = Newtonsoft.Json.JsonConvert.DeserializeObject<DataResult<List<Developer>>>(unResult);
+                        ViewData["DeveloperID"] = new SelectList(resultDeveloper.Data, "ID", "DeveloperName");
+                        response = await client.GetAsync("https://localhost:44397/api/categories/getall");
+                        unResult = response.Content.ReadAsStringAsync().Result;
+                        var resultCategory = Newtonsoft.Json.JsonConvert.DeserializeObject<DataResult<List<Category>>>(unResult);
+                        ViewData["CategoryID"] = new SelectList(resultCategory.Data, "ID", "CategoryName");
+                        return View(user);
+                    }  
                 }
             }
             return RedirectToAction("UnAuth");

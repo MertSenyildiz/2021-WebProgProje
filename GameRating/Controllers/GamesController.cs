@@ -10,6 +10,8 @@ using System.Net.Http.Headers;
 using System.Text;
 using System.Threading.Tasks;
 using Entities.Concrete;
+using System.IdentityModel.Tokens.Jwt;
+using Core.Entities.Concrete;
 
 namespace GameRating.Controllers
 {
@@ -84,6 +86,39 @@ namespace GameRating.Controllers
             }
             return RedirectToAction("UnAuth","Home");
 
+        }
+        [HttpPost]
+        public async Task<IActionResult> Create()
+        {
+            var game = new Game
+            {
+                GameName= HttpContext.Request.Form["GameName"],
+                DeveloperID = Convert.ToInt32(HttpContext.Request.Form["DeveloperID"]),
+                PublisherID = Convert.ToInt32(HttpContext.Request.Form["PublisherID"]),
+                CategoryID = Convert.ToInt32(HttpContext.Request.Form["CategoryID"]),
+                ReleaseDate= Convert.ToDateTime(HttpContext.Request.Form["ReleaseDate"])
+            };
+            if (Request.Cookies["token"] != null)
+            {
+                var token = Request.Cookies["token"];
+                var handler = new JwtSecurityTokenHandler();
+                var jwtSecurityToken = handler.ReadJwtToken(token);
+                var jti = jwtSecurityToken.Claims;//.Where(c=>c.Type== "http://schemas.microsoft.com/ws/2008/06/identity/claims/role");
+                var user = new User { ID = Convert.ToInt32(jwtSecurityToken.Claims.First(c => c.Type == "http://schemas.xmlsoap.org/ws/2005/05/identity/claims/nameidentifier").Value), UserName = jwtSecurityToken.Claims.First(c => c.Type == "unique_name").Value };
+                if (jti.Where(c => c.Value == "Admin").Any())
+                {
+                    using(HttpClient client = new HttpClient())
+                    {
+                        client.DefaultRequestHeaders.Authorization = new AuthenticationHeaderValue("Bearer", Request.Cookies["token"]);
+                        var json = Newtonsoft.Json.JsonConvert.SerializeObject(game);
+                        var data = new System.Net.Http.StringContent(json, Encoding.UTF8, "application/json");
+                        var response = await client.PostAsync("https://localhost:44397/api/games/add/", data);
+                        return RedirectToAction("AdminPanel", "Home");
+                    }
+                        
+                }
+            }
+            return RedirectToAction("UnAuth", "Home");
         }
         public async Task<IActionResult> Search(string name)
         {
